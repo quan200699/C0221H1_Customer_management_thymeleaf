@@ -1,15 +1,27 @@
 package com.codegym.model;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
+@Table(name = "customers")
 public class Customer {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String name;
 
+    @Column(columnDefinition = "varchar(50)", nullable = false, unique = true)
     private String email;
 
     private String address;
 
     private String avatar;
+
+    @OneToMany
+    private List<Order> orders; //tạo ra 1 bảng phụ mà mình không dùng.
 
     public Customer() {
     }
@@ -67,5 +79,13 @@ public class Customer {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

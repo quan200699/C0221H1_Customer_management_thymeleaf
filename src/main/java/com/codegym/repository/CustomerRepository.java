@@ -1,48 +1,79 @@
 package com.codegym.repository;
 
 import com.codegym.model.Customer;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class CustomerRepository implements ICustomerRepository {
-    private static Map<Long, Customer> customers = new HashMap<>();
+    private static SessionFactory sessionFactory;
+    private static EntityManager entityManager;
 
     static {
-        customers.put(1L, new Customer(1L, "John", "john@codegym.vn", "Hanoi"));
-        customers.put(2L, new Customer(2L, "Bill", "bill@codegym.vn", "Danang"));
-        customers.put(3L, new Customer(3L, "Alex", "alex@codegym.vn", "Saigon"));
-        customers.put(4L, new Customer(4L, "Adam", "adam@codegym.vn", "Beijin"));
-        customers.put(5L, new Customer(5L, "Sophia", "sophia@codegym.vn", "Miami"));
-        customers.put(6L, new Customer(6L, "Rose", "rose@codegym.vn", "Newyork"));
+        try {
+            sessionFactory = new Configuration()
+                    .configure("hibernate.conf.xml")
+                    .buildSessionFactory();
+            entityManager = sessionFactory.createEntityManager();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public List<Customer> findAll() {
-        return new ArrayList<>(customers.values());
+        String query = "Select c from Customer as c";
+        TypedQuery<Customer> typedQuery = entityManager.createQuery(query, Customer.class);
+        return typedQuery.getResultList();
     }
 
     @Override
-    public Customer findById(Long key) {
-        return customers.get(key);
+    public Customer findById(Long id) {
+        String queryStr = "SELECT c FROM Customer AS c WHERE c.id = :id";
+        TypedQuery<Customer> query = entityManager.createQuery(queryStr, Customer.class);
+        query.setParameter("id", id);
+        return query.getSingleResult();
     }
 
     @Override
-    public Customer createCustomer(Customer customer) {
-        customers.put(customer.getId(), customer);
-        return customer;
-    }
-
-    @Override
-    public Customer updateCustomer(Long key, Customer customer) {
-        customers.replace(key, customer);
-        return customer;
+    public Customer save(Customer customer) {
+        Session session = null;
+        Transaction transaction = null;
+        try {
+            session = sessionFactory.openSession();
+            transaction = session.beginTransaction();
+            Customer origin = findById(customer.getId());
+            origin.setName(customer.getName());
+            origin.setEmail(customer.getEmail());
+            origin.setAddress(customer.getAddress());
+            origin.setAvatar(customer.getAvatar());
+            session.saveOrUpdate(origin);
+            transaction.commit();
+            return origin;
+        } catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null) {
+                session.close();
+            }
+        }
+        return null;
     }
 
     @Override
     public void deleteCustomer(Long key) {
-        customers.remove(key);
+
     }
 }

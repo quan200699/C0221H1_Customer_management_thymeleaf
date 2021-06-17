@@ -51,7 +51,7 @@ public class CustomerController {
             e.printStackTrace();
         }
         Customer customer = new Customer(customerForm.getId(), customerForm.getName(), customerForm.getEmail(), customerForm.getAddress(), fileName);
-        customerService.createCustomer(customer);
+        customerService.save(customer);
         ModelAndView modelAndView = new ModelAndView("/customer/create");
         modelAndView.addObject("customer", new CustomerForm());
         modelAndView.addObject("message", "Tạo thành công");

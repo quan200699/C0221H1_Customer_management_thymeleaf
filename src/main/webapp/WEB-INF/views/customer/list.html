@@ -16,6 +16,7 @@
         <th>Name</th>
         <th>Email</th>
         <th>Address</th>
+        <th>Image</th>
         <th>Edit</th>
         <th>Delete</th>
         <th>View</th>
@@ -27,6 +28,7 @@
         <td th:text="${customer.name}"></td>
         <td th:text="${customer.email}"></td>
         <td th:text="${customer.address}"></td>
+        <td><img th:src="@{'/images/' + ${customer.avatar}}" alt="avatar"></td>
         <td><a th:href="@{/customer/{id}/edit(id=${customer.id})}">edit</a></td>
         <td><a th:href="@{/customer/{id}/delete(id=${customer.id})}">delete</a></td>
         <td><a th:href="@{/customer/{id}/view(id=${customer.id})}">view</a></td>
