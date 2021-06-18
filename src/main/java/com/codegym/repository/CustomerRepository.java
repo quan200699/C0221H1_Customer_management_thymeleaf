@@ -1,33 +1,17 @@
 package com.codegym.repository;
 
 import com.codegym.model.Customer;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
+@Transactional
 public class CustomerRepository implements ICustomerRepository {
-    private static SessionFactory sessionFactory;
-    private static EntityManager entityManager;
-
-    static {
-        try {
-            sessionFactory = new Configuration()
-                    .configure("hibernate.conf.xml")
-                    .buildSessionFactory();
-            entityManager = sessionFactory.createEntityManager();
-        } catch (HibernateException e) {
-            e.printStackTrace();
-        }
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public List<Customer> findAll() {
@@ -46,34 +30,19 @@ public class CustomerRepository implements ICustomerRepository {
 
     @Override
     public Customer save(Customer customer) {
-        Session session = null;
-        Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
-            transaction = session.beginTransaction();
-            Customer origin = findById(customer.getId());
-            origin.setName(customer.getName());
-            origin.setEmail(customer.getEmail());
-            origin.setAddress(customer.getAddress());
-            origin.setAvatar(customer.getAvatar());
-            session.saveOrUpdate(origin);
-            transaction.commit();
-            return origin;
-        } catch (Exception e) {
-            e.printStackTrace();
-            if (transaction != null) {
-                transaction.rollback();
-            }
-        } finally {
-            if (session != null) {
-                session.close();
-            }
+        if (customer.getId() != null) {
+            entityManager.merge(customer);
+        } else {
+            entityManager.persist(customer);
         }
-        return null;
+        return customer;
     }
 
     @Override
-    public void deleteCustomer(Long key) {
-
+    public void deleteCustomer(Long id) {
+        Customer customer = findById(id);
+        if (customer != null) {
+            entityManager.remove(customer);
+        }
     }
 }

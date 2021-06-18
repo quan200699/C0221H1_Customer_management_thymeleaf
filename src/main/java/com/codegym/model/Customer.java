@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "customers")
+@NamedQuery(name = "findAllByName", query = "SELECT c from Customer as c where c.name like ?1 and c.address = ?2")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
