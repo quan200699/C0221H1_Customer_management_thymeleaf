@@ -17,7 +17,8 @@ public class Customer {
     @Column(columnDefinition = "varchar(50)", nullable = false, unique = true)
     private String email;
 
-    private String address;
+    @ManyToOne
+    private Address address;
 
     private String avatar;
 
@@ -27,14 +28,14 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long id, String name, String email, String address) {
+    public Customer(Long id, String name, String email, Address address) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.address = address;
     }
 
-    public Customer(Long id, String name, String email, String address, String avatar) {
+    public Customer(Long id, String name, String email, Address address, String avatar) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -66,11 +67,11 @@ public class Customer {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

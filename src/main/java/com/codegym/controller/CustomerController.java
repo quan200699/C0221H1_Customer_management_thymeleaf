@@ -1,34 +1,49 @@
 package com.codegym.controller;
 
+import com.codegym.model.Address;
 import com.codegym.model.Customer;
 import com.codegym.model.CustomerForm;
-import com.codegym.service.ICustomerService;
+import com.codegym.service.address.IAddressService;
+import com.codegym.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
+    @Autowired
+    private IAddressService addressService;
+
     @Value("${upload-file}")
     private String filePath;
 
+    @ModelAttribute("addresses")
+    public Iterable<Address> addresses(){
+        return addressService.findAll();
+    }
+
     @GetMapping("/customer/list")
-    public ModelAndView showListCustomer() {
-        List<Customer> customers = customerService.findAll();
+    public ModelAndView showListCustomer(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
+        Page<Customer> customers;
+        if (name.isPresent()) {
+            customers = customerService.findAllByNameContaining(name.get(), pageable);
+        } else {
+            customers = customerService.findAll(pageable);
+        }
         ModelAndView modelAndView = new ModelAndView("/customer/list");
         modelAndView.addObject("customers", customers);
         return modelAndView;
@@ -52,6 +67,8 @@ public class CustomerController {
         }
         Customer customer = new Customer(customerForm.getId(), customerForm.getName(), customerForm.getEmail(), customerForm.getAddress(), fileName);
         customerService.save(customer);
+
+//        customerService.createCustomerUsingProcedure(customer.getName(), customer.getEmail());
         ModelAndView modelAndView = new ModelAndView("/customer/create");
         modelAndView.addObject("customer", new CustomerForm());
         modelAndView.addObject("message", "Tạo thành công");
@@ -60,9 +77,12 @@ public class CustomerController {
 
     @GetMapping("/customer/{id}/view")
     public ModelAndView getCustomer(@PathVariable Long id) {
-        Customer customer = customerService.findById(id);
+        Optional<Customer> customerOptional = customerService.findById(id);
+        if (!customerOptional.isPresent()) {
+            return new ModelAndView("error-404");
+        }
         ModelAndView modelAndView = new ModelAndView("/customer/view");
-        modelAndView.addObject("customer", customer);
+        modelAndView.addObject("customer", customerOptional.get());
         return modelAndView;
     }
 }

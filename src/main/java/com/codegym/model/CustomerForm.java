@@ -9,14 +9,14 @@ public class CustomerForm {
 
     private String email;
 
-    private String address;
+    private Address address;
 
     private MultipartFile avatar;
 
     public CustomerForm() {
     }
 
-    public CustomerForm(Long id, String name, String email, String address, MultipartFile avatar) {
+    public CustomerForm(Long id, String name, String email, Address address, MultipartFile avatar) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -48,11 +48,11 @@ public class CustomerForm {
         this.email = email;
     }
 
-    public String getAddress() {
+    public Address getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(Address address) {
         this.address = address;
     }
 

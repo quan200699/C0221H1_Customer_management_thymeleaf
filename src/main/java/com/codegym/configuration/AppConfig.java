@@ -1,9 +1,5 @@
 package com.codegym.configuration;
 
-import com.codegym.repository.CustomerRepository;
-import com.codegym.repository.ICustomerRepository;
-import com.codegym.service.CustomerService;
-import com.codegym.service.ICustomerService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +9,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
@@ -37,9 +35,11 @@ import java.util.Properties;
 
 @EnableWebMvc
 @Configuration
-@ComponentScan("com.codegym.controller")
+@ComponentScan("com.codegym")
 @PropertySource("classpath:upload-file.properties")
 @EnableTransactionManagement
+@EnableJpaRepositories("com.codegym.repository")
+@EnableSpringDataWebSupport
 public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
     @Value("${upload-file}")
     private String fileUpload;
@@ -76,16 +76,6 @@ public class AppConfig implements WebMvcConfigurer, ApplicationContextAware {
         thymeleafViewResolver.setTemplateEngine(templateEngine());
         thymeleafViewResolver.setCharacterEncoding("UTF-8");
         return thymeleafViewResolver;
-    }
-
-    @Bean
-    public ICustomerRepository customerRepository() {
-        return new CustomerRepository();
-    }
-
-    @Bean
-    public ICustomerService customerService() {
-        return new CustomerService();
     }
 
     @Override
