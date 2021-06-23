@@ -10,19 +10,27 @@ com/codegym/aspect/Logger.java
  com.codegym.aspect.Logger
 com/codegym/model/Order.java
  com.codegym.model.Order
+com/codegym/configuration/AppInit.java
+ com.codegym.configuration.AppInit
+com/codegym/exception/NotFoundException.java
+ com.codegym.exception.NotFoundException
+com/codegym/model/Address.java
+ com.codegym.model.Address
+com/codegym/service/customer/CustomerService.java
+ com.codegym.service.customer.CustomerService
+com/codegym/repository/ICustomerRepository.java
+ com.codegym.repository.ICustomerRepository
 com/codegym/service/customer/ICustomerService.java
  com.codegym.service.customer.ICustomerService
 com/codegym/service/address/IAddressService.java
  com.codegym.service.address.IAddressService
-com/codegym/model/Address.java
- com.codegym.model.Address
+com/codegym/controller/AddressController.java
+ com.codegym.controller.AddressController
 com/codegym/service/address/AddressService.java
  com.codegym.service.address.AddressService
-com/codegym/service/customer/CustomerService.java
- com.codegym.service.customer.CustomerService
-com/codegym/configuration/AppInit.java
- com.codegym.configuration.AppInit
-com/codegym/repository/ICustomerRepository.java
- com.codegym.repository.ICustomerRepository
+com/codegym/exception/ServerException.java
+ com.codegym.exception.ServerException
+com/codegym/aspect/CustomExceptionHandler.java
+ com.codegym.aspect.CustomExceptionHandler
 com/codegym/controller/CustomerController.java
  com.codegym.controller.CustomerController

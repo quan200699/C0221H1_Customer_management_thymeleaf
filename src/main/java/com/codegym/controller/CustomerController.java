@@ -1,5 +1,7 @@
 package com.codegym.controller;
 
+import com.codegym.exception.NotFoundException;
+import com.codegym.exception.ServerException;
 import com.codegym.model.Address;
 import com.codegym.model.Customer;
 import com.codegym.model.CustomerForm;
@@ -34,21 +36,17 @@ public class CustomerController {
     private String filePath;
 
     @ModelAttribute("addresses")
-    public Iterable<Address> addresses(){
+    public Iterable<Address> addresses() {
         return addressService.findAll();
     }
 
     @GetMapping("/customer/list")
     public ModelAndView showListCustomer(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
-        Page<Customer> customers = null;
+        Page<Customer> customers;
         if (name.isPresent()) {
             customers = customerService.findAllByNameContaining(name.get(), pageable);
         } else {
-            try {
-                customers = customerService.findAll(pageable);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            customers = customerService.findAll(pageable);
         }
         ModelAndView modelAndView = new ModelAndView("/customer/list");
         modelAndView.addObject("customers", customers);
@@ -63,9 +61,9 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public ModelAndView saveCustomer(@Validated @ModelAttribute(name = "customer") CustomerForm customerForm, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()){
-            return new ModelAndView("/customer/create");
+    public ModelAndView saveCustomer(@Validated @ModelAttribute(name = "customer") CustomerForm customerForm, BindingResult bindingResult) throws ServerException {
+        if (bindingResult.hasErrors()) {
+            throw new ServerException();
         }
         MultipartFile multipartFile = customerForm.getAvatar();
         String fileName = multipartFile.getOriginalFilename();
@@ -85,12 +83,23 @@ public class CustomerController {
     }
 
     @GetMapping("/customer/{id}/view")
-    public ModelAndView getCustomer(@PathVariable Long id) {
+    public ModelAndView getCustomer(@PathVariable Long id) throws NotFoundException {
         Optional<Customer> customerOptional = customerService.findById(id);
         if (!customerOptional.isPresent()) {
-            return new ModelAndView("error-404");
+            throw new NotFoundException();
         }
         ModelAndView modelAndView = new ModelAndView("/customer/view");
+        modelAndView.addObject("customer", customerOptional.get());
+        return modelAndView;
+    }
+
+    @GetMapping("/customer/{id}/edit")
+    public ModelAndView editCustomer(@PathVariable Long id) throws NotFoundException {
+        Optional<Customer> customerOptional = customerService.findById(id);
+        if (!customerOptional.isPresent()) {
+            throw new NotFoundException();
+        }
+        ModelAndView modelAndView = new ModelAndView("/customer/edit");
         modelAndView.addObject("customer", customerOptional.get());
         return modelAndView;
     }

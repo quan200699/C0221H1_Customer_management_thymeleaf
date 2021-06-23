@@ -5,6 +5,8 @@ import com.codegym.repository.IAddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class AddressService implements IAddressService {
     @Autowired
@@ -13,5 +15,10 @@ public class AddressService implements IAddressService {
     @Override
     public Iterable<Address> findAll() {
         return addressRepository.findAll();
+    }
+
+    @Override
+    public Optional<Address> findById(Long id) {
+        return Optional.empty();
     }
 }
