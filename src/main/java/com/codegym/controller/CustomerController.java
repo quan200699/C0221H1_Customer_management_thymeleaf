@@ -40,11 +40,15 @@ public class CustomerController {
 
     @GetMapping("/customer/list")
     public ModelAndView showListCustomer(@RequestParam("q") Optional<String> name, @PageableDefault(size = 5) Pageable pageable) {
-        Page<Customer> customers;
+        Page<Customer> customers = null;
         if (name.isPresent()) {
             customers = customerService.findAllByNameContaining(name.get(), pageable);
         } else {
-            customers = customerService.findAll(pageable);
+            try {
+                customers = customerService.findAll(pageable);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         ModelAndView modelAndView = new ModelAndView("/customer/list");
         modelAndView.addObject("customers", customers);

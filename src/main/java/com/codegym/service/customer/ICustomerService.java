@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface ICustomerService {
     Iterable<Customer> findAll();
 
-    Page<Customer> findAll(Pageable pageable);
+    Page<Customer> findAll(Pageable pageable) throws Exception;
 
     Optional<Customer> findById(Long id);
 

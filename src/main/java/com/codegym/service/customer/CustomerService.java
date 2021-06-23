@@ -20,7 +20,8 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Page<Customer> findAll(Pageable pageable) {
+    public Page<Customer> findAll(Pageable pageable) throws Exception {
+        if (true )throw new Exception("hihi");
         return customerRepository.findAll(pageable);
     }
 
