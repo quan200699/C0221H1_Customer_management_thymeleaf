@@ -1,6 +1,7 @@
 package com.codegym.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.List;
 
 @Entity
@@ -11,10 +12,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(columnDefinition = "varchar(50)", nullable = false)
+//    @Column(columnDefinition = "varchar(50)", nullable = false)
     private String name;
 
-    @Column(columnDefinition = "varchar(50)", nullable = false, unique = true)
+//    @Column(columnDefinition = "varchar(50)", nullable = false, unique = true)
     private String email;
 
     @ManyToOne
@@ -35,7 +36,7 @@ public class Customer {
         this.address = address;
     }
 
-    public Customer(Long id, String name, String email, Address address, String avatar) {
+    public Customer(Long id,@NotEmpty String name,@Email String email, Address address, String avatar) {
         this.id = id;
         this.name = name;
         this.email = email;

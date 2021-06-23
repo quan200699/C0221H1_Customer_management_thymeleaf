@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.FileCopyUtils;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -57,7 +59,10 @@ public class CustomerController {
     }
 
     @PostMapping("/customer/save")
-    public ModelAndView saveCustomer(@ModelAttribute(name = "customer") CustomerForm customerForm) {
+    public ModelAndView saveCustomer(@Validated @ModelAttribute(name = "customer") CustomerForm customerForm, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()){
+            return new ModelAndView("/customer/create");
+        }
         MultipartFile multipartFile = customerForm.getAvatar();
         String fileName = multipartFile.getOriginalFilename();
         try {

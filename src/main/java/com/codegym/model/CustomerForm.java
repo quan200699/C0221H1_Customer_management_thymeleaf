@@ -1,17 +1,28 @@
 package com.codegym.model;
 
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 public class CustomerForm {
     private Long id;
-
+    @NotEmpty(message = "{name.empty}") // > Không được phép null và blank
     private String name;
 
+    @Email(message = "{email.email}")
+    @NotEmpty(message = "{email.empty}")
     private String email;
 
     private Address address;
 
     private MultipartFile avatar;
+
+    @Pattern(regexp = "^(\\+\\d{1,2}\\s)?\\(?\\d{3}\\)?[\\s.-]\\d{3}[\\s.-]\\d{4}$", message = "{phoneNumber.matches}")
+    private String phoneNumber;
 
     public CustomerForm() {
     }
@@ -62,5 +73,13 @@ public class CustomerForm {
 
     public void setAvatar(MultipartFile avatar) {
         this.avatar = avatar;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
