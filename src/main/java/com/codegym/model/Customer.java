@@ -23,9 +23,6 @@ public class Customer {
 
     private String avatar;
 
-    @OneToMany
-    private List<Order> orders; //tạo ra 1 bảng phụ mà mình không dùng.
-
     public Customer() {
     }
 
@@ -82,13 +79,5 @@ public class Customer {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public List<Order> getOrders() {
-        return orders;
-    }
-
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
     }
 }
