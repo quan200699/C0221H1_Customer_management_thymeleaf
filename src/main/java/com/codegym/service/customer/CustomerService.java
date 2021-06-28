@@ -5,6 +5,7 @@ import com.codegym.model.Customer;
 import com.codegym.repository.ICustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,13 @@ public class CustomerService implements ICustomerService {
     @Override
     public Page<Customer> findAll(Pageable pageable) {
         return customerRepository.findAll(pageable);
+    }
+
+    @Override
+    public List<Customer> findAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Customer> customers = customerRepository.findAll(pageRequest);
+        return customers.getContent();
     }
 
     @Override
@@ -54,5 +62,10 @@ public class CustomerService implements ICustomerService {
     @Override
     public List<Customer> findAllByAddress(Address address) {
         return customerRepository.findAllByAddress(address);
+    }
+
+    @Override
+    public List<Customer> findAllUsingQueryForPagination(Integer limit, Integer offset) {
+        return customerRepository.findAllUsingQueryForPagination(limit, offset);
     }
 }

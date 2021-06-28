@@ -25,6 +25,16 @@ public class CustomerRestController {
         return new ResponseEntity<>(customers, HttpStatus.OK); // OK - 200
     }
 
+    @GetMapping("/pagination")
+    public ResponseEntity<List<Customer>> getAllCustomerUsingPagination(@RequestParam int page, @RequestParam int size){
+//        List<Customer> customers = customerService.findAll(page, size);
+        List<Customer> customers = customerService.findAllUsingQueryForPagination(size, page);
+        if (customers.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); //NO_CONTENT - 204
+        }
+        return new ResponseEntity<>(customers, HttpStatus.OK); // OK - 200
+    }
+
     @PostMapping
     public ResponseEntity<Customer> saveCustomer(@RequestBody Customer customer) {
         return new ResponseEntity<>(customerService.save(customer), HttpStatus.CREATED); //CREATED - 201

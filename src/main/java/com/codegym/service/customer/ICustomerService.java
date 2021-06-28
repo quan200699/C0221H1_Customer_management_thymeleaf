@@ -13,6 +13,8 @@ public interface ICustomerService {
 
     Page<Customer> findAll(Pageable pageable);
 
+    List<Customer> findAll(int page, int size);
+
     Optional<Customer> findById(Long id);
 
     Customer save(Customer customer);
@@ -23,4 +25,6 @@ public interface ICustomerService {
     void createCustomerUsingProcedure(String name, String email);
 
     List<Customer> findAllByAddress(Address address);
+
+    List<Customer> findAllUsingQueryForPagination(Integer limit, Integer offset);
 }

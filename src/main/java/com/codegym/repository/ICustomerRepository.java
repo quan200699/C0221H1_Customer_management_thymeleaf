@@ -16,4 +16,7 @@ public interface ICustomerRepository extends PagingAndSortingRepository<Customer
     void createCustomerUsingProcedure(String name, String email);
 
     List<Customer> findAllByAddress(Address address);
+
+    @Query(value = "select * from customers limit ?1 offset ?2", nativeQuery = true)
+    List<Customer> findAllUsingQueryForPagination(Integer limit, Integer offset);
 }
