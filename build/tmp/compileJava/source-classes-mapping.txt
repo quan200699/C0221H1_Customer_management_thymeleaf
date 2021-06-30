@@ -4,49 +4,55 @@ com/codegym/model/CustomerForm.java
  com.codegym.model.CustomerForm
 com/codegym/model/Customer.java
  com.codegym.model.Customer
-com/codegym/repository/ICustomerRepository.java
- com.codegym.repository.ICustomerRepository
+com/codegym/configuration/AppConfig.java
+ com.codegym.configuration.AppConfig
 com/codegym/repository/IAddressRepository.java
  com.codegym.repository.IAddressRepository
-com/codegym/service/address/AddressService.java
- com.codegym.service.address.AddressService
-com/codegym/model/Cart.java
- com.codegym.model.Cart
+com/codegym/controller/AddressRestController.java
+ com.codegym.controller.AddressRestController
+com/codegym/controller/CustomerRestController.java
+ com.codegym.controller.CustomerRestController
 com/codegym/aspect/Logger.java
  com.codegym.aspect.Logger
 com/codegym/service/product/IProductService.java
  com.codegym.service.product.IProductService
 com/codegym/service/address/IAddressService.java
  com.codegym.service.address.IAddressService
-com/codegym/controller/CustomerController.java
- com.codegym.controller.CustomerController
-com/codegym/model/Address.java
- com.codegym.model.Address
+com/codegym/configuration/SecurityConfig.java
+ com.codegym.configuration.SecurityConfig
+com/codegym/configuration/CustomSuccessHandler.java
+ com.codegym.configuration.CustomSuccessHandler
+com/codegym/service/customer/CustomerService.java
+ com.codegym.service.customer.CustomerService
+com/codegym/repository/ICustomerRepository.java
+ com.codegym.repository.ICustomerRepository
 com/codegym/service/product/ProductService.java
  com.codegym.service.product.ProductService
-com/codegym/controller/AddressController.java
- com.codegym.controller.AddressController
+com/codegym/controller/CustomerController.java
+ com.codegym.controller.CustomerController
 com/codegym/exception/ServerException.java
  com.codegym.exception.ServerException
 com/codegym/aspect/CustomExceptionHandler.java
  com.codegym.aspect.CustomExceptionHandler
 com/codegym/model/Product.java
  com.codegym.model.Product
-com/codegym/controller/ShoppingCartController.java
- com.codegym.controller.ShoppingCartController
+com/codegym/service/customer/ICustomerService.java
+ com.codegym.service.customer.ICustomerService
 com/codegym/controller/ProductController.java
  com.codegym.controller.ProductController
 com/codegym/exception/NotFoundException.java
  com.codegym.exception.NotFoundException
-com/codegym/service/customer/ICustomerService.java
- com.codegym.service.customer.ICustomerService
-com/codegym/service/customer/CustomerService.java
- com.codegym.service.customer.CustomerService
-com/codegym/controller/AddressRestController.java
- com.codegym.controller.AddressRestController
-com/codegym/controller/CustomerRestController.java
- com.codegym.controller.CustomerRestController
+com/codegym/model/Address.java
+ com.codegym.model.Address
+com/codegym/controller/AddressController.java
+ com.codegym.controller.AddressController
+com/codegym/model/Cart.java
+ com.codegym.model.Cart
+com/codegym/service/address/AddressService.java
+ com.codegym.service.address.AddressService
 com/codegym/configuration/AppInit.java
  com.codegym.configuration.AppInit
-com/codegym/configuration/AppConfig.java
- com.codegym.configuration.AppConfig
+com/codegym/controller/ShoppingCartController.java
+ com.codegym.controller.ShoppingCartController
+com/codegym/configuration/SecurityInit.java
+ com.codegym.configuration.SecurityInit
