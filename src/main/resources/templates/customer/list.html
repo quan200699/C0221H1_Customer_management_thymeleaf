@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Customers</h3>
+<p>
+    <a th:href="@{/customer/create}">
+        Add new customer
+    </a>
+</p>
+<table>
+    <tr>
+        <td>Name</td>
+        <td><input type="text" id="name"></td>
+    </tr>
+    <tr>
+        <td>Email</td>
+        <td><input type="text" id="email"></td>
+    </tr>
+    <tr>
+        <td>Address</td>
+        <td>
+            <select id="address">
+                <option th:each="address: ${addresses}" th:value="${address.id}">
+                    <span th:text="${address.name}"></span>
+                </option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td>
+            <button onclick="addNewCustomer()">Submit</button>
+        </td>
+    </tr>
+</table>
+
+
+<table id="customers">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Image</th>
+        <th>Edit</th>
+        <th>Delete</th>
+        <th>View</th>
+    </tr>
+    </thead>
+    <tbody id="body-customer">
+    <tr th:each="customer,rowStat : ${customers}">
+        <td th:text="${rowStat.count}"></td>
+        <td th:text="${customer.name}"></td>
+        <td th:text="${customer.email}"></td>
+        <td th:text="${customer.address}"></td>
+        <td><img th:src="@{'/images/' + ${customer.avatar}}" alt="avatar"></td>
+        <td><a th:href="@{/customer/{id}/edit(id=${customer.id})}">edit</a></td>
+        <td><a th:href="@{/customer/{id}/delete(id=${customer.id})}">delete</a></td>
+        <td><a th:href="@{/customer/{id}/view(id=${customer.id})}">view</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="/layout :: footer"></footer>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+    /* Lấy dữ liệu người dùng nhập vào
+    * Sử dụng DOM để lấy
+    * Khởi tạo một đối tượng Customer bằng Object Literal
+    * Sử dụng Ajax để gọi API
+    */
+    function addNewCustomer() {
+        // let name = document.getElementById("name").value;//Sử dụng DOM để lấy
+        let name = $("#name").val();
+        let email = $("#email").val();
+        let address = $("#address").val();
+        let customer = {
+            name: name,
+            email: email,
+            address: {
+                id: address
+            }
+        };
+        $.ajax({
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json' // Nội dụng mình gửi đi sẽ dạng JSON
+            },
+            type: 'POST',
+            data: JSON.stringify(customer),
+            url: '/customers',
+            success: function () {
+                $.ajax({
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    type: 'GET',
+                    url: '/customers',
+                    success: function (customers) {
+                        let tbody = document.getElementById("body-customer");
+                        let string = '';
+                        for (let i = 0; i < customers.length; i++) {
+                            string += `<tr>
+                <td >${i + 1}</td>
+        <td>${customers[i].name}</td>
+        <td>${customers[i].email}</td>
+        <td>${customers[i].address?.name}</td>
+        <td><img src="" alt="avatar"></td>
+        <td><a href="">edit</a></td>
+        <td><a href="">delete</a></td>
+        <td><a href="">view</a></td></tr>`
+                        }
+                        tbody.innerHTML = string;
+                    },
+                    error: function () {
+                        console.log("error")
+                    }
+                });
+            },
+            error: function () {
+                console.log("error")
+            }
+        });
+    }
+</script>
+</body>
+</html>

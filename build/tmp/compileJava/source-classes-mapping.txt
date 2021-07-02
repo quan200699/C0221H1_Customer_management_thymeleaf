@@ -1,41 +1,67 @@
+com/codegym/service/user/IUserService.java
+ com.codegym.service.user.IUserService
+com/codegym/service/role/IRoleService.java
+ com.codegym.service.role.IRoleService
 com/codegym/repository/IProductRepository.java
  com.codegym.repository.IProductRepository
 com/codegym/model/CustomerForm.java
  com.codegym.model.CustomerForm
 com/codegym/model/Customer.java
  com.codegym.model.Customer
-com/codegym/configuration/AppConfig.java
- com.codegym.configuration.AppConfig
+com/codegym/model/Role.java
+ com.codegym.model.Role
 com/codegym/repository/IAddressRepository.java
  com.codegym.repository.IAddressRepository
-com/codegym/controller/AddressRestController.java
- com.codegym.controller.AddressRestController
+com/codegym/service/user/UserService.java
+ com.codegym.service.user.UserService
 com/codegym/controller/CustomerRestController.java
  com.codegym.controller.CustomerRestController
 com/codegym/aspect/Logger.java
  com.codegym.aspect.Logger
+com/codegym/service/role/RoleService.java
+ com.codegym.service.role.RoleService
 com/codegym/service/product/IProductService.java
  com.codegym.service.product.IProductService
-com/codegym/service/address/IAddressService.java
- com.codegym.service.address.IAddressService
-com/codegym/configuration/SecurityConfig.java
- com.codegym.configuration.SecurityConfig
+com/codegym/configuration/JwtAuthenticationFilter.java
+ com.codegym.configuration.JwtAuthenticationFilter
+com/codegym/configuration/SecurityInit.java
+ com.codegym.configuration.SecurityInit
+com/codegym/controller/CustomerController.java
+ com.codegym.controller.CustomerController
 com/codegym/configuration/CustomSuccessHandler.java
  com.codegym.configuration.CustomSuccessHandler
+com/codegym/service/IGeneralService.java
+ com.codegym.service.IGeneralService
 com/codegym/service/customer/CustomerService.java
  com.codegym.service.customer.CustomerService
 com/codegym/repository/ICustomerRepository.java
  com.codegym.repository.ICustomerRepository
 com/codegym/service/product/ProductService.java
  com.codegym.service.product.ProductService
-com/codegym/controller/CustomerController.java
- com.codegym.controller.CustomerController
+com/codegym/model/JwtResponse.java
+ com.codegym.model.JwtResponse
+com/codegym/repository/IUserRepository.java
+ com.codegym.repository.IUserRepository
+com/codegym/model/Cart.java
+ com.codegym.model.Cart
+com/codegym/service/JwtService.java
+ com.codegym.service.JwtService
 com/codegym/exception/ServerException.java
  com.codegym.exception.ServerException
+com/codegym/model/User.java
+ com.codegym.model.User
+com/codegym/model/UserPrincipal.java
+ com.codegym.model.UserPrincipal
 com/codegym/aspect/CustomExceptionHandler.java
  com.codegym.aspect.CustomExceptionHandler
+com/codegym/CustomerManagementApplication.java
+ com.codegym.CustomerManagementApplication
 com/codegym/model/Product.java
  com.codegym.model.Product
+com/codegym/controller/AuthController.java
+ com.codegym.controller.AuthController
+com/codegym/repository/IRoleRepository.java
+ com.codegym.repository.IRoleRepository
 com/codegym/service/customer/ICustomerService.java
  com.codegym.service.customer.ICustomerService
 com/codegym/controller/ProductController.java
@@ -44,15 +70,15 @@ com/codegym/exception/NotFoundException.java
  com.codegym.exception.NotFoundException
 com/codegym/model/Address.java
  com.codegym.model.Address
-com/codegym/controller/AddressController.java
- com.codegym.controller.AddressController
-com/codegym/model/Cart.java
- com.codegym.model.Cart
-com/codegym/service/address/AddressService.java
- com.codegym.service.address.AddressService
-com/codegym/configuration/AppInit.java
- com.codegym.configuration.AppInit
 com/codegym/controller/ShoppingCartController.java
  com.codegym.controller.ShoppingCartController
-com/codegym/configuration/SecurityInit.java
- com.codegym.configuration.SecurityInit
+com/codegym/service/address/IAddressService.java
+ com.codegym.service.address.IAddressService
+com/codegym/controller/AddressController.java
+ com.codegym.controller.AddressController
+com/codegym/service/address/AddressService.java
+ com.codegym.service.address.AddressService
+com/codegym/controller/AddressRestController.java
+ com.codegym.controller.AddressRestController
+com/codegym/configuration/SecurityConfig.java
+ com.codegym.configuration.SecurityConfig
