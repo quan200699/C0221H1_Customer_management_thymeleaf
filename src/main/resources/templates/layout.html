@@ -3,86 +3,44 @@
 <head th:fragment="head">
     <meta charset="UTF-8">
     <title>Ứng dụng quản lý khách hàng</title>
-  <style type="text/css">
-    h3 {
-      background-color: blue;
-      color: white;
-      padding: 10px 0 10px 20px;
-    }
-
-    footer {
-      margin: 10px 0;
-    }
-
-    #customers {
-      font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-      border-collapse: collapse;
-      width: 100%;
-    }
-
-    #customers td, #customers th {
-      border: 1px solid #ddd;
-      padding: 8px;
-    }
-
-    #customers tr:nth-child(even) {
-      background-color: #f2f2f2;
-    }
-
-    #customers tr:hover {
-      background-color: #ddd;
-    }
-
-    #customers th {
-      padding-top: 12px;
-      padding-bottom: 12px;
-      text-align: left;
-      background-color: #4CAF50;
-      color: white;
-    }
-
-    input[type=text], input[type=email] {
-      width: 100%;
-      padding: 12px 0px;
-      margin: 8px 0;
-      display: inline-block;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-    }
-
-    input[type=submit] {
-      width: 300px;
-      background-color: #4CAF50;
-      color: white;
-      padding: 14px 20px;
-      margin: 8px 0;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    input[type=submit]:hover {
-      background-color: #45a049;
-    }
-
-    #form {
-      width: 500px;
-      border-radius: 5px;
-      background-color: #f2f2f2;
-      padding: 20px;
-    }
-
-    .notify span {
-      font-size: 15px;
-      color: blue;
-    }
-  </style>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <link rel="stylesheet" href="../../css/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../../css/datatables-bs4/css/dataTables.bootstrap4.css">
+    <link rel="stylesheet" href="../../css/datatables-responsive/css/responsive.bootstrap4.css">
+    <link rel="stylesheet" href="../../css/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <link rel="stylesheet" href="../../css/adminlte.css">
 </head>
 <body>
 <footer th:fragment="footer">
   &copy; 2021 CodeGym
 </footer>
+<script src="../../js/jquery.js"></script>
+<script src="../../js/bootstrap.bundle.js"></script>
+<script src="../../js/datatables/jquery.dataTables.js"></script>
+<script src="../../css/datatables-bs4/js/dataTables.bootstrap4.js"></script>
+<script src="../../css/datatables-responsive/js/dataTables.responsive.js"></script>
+<script src="../../css/datatables-responsive/js/responsive.bootstrap4.js"></script>
+<script src="../../css/datatables-buttons/js/buttons.bootstrap4.js"></script>
+<script src="../../css/datatables-buttons/js/dataTables.buttons.js"></script>
+<script src="../../js/jszip/jszip.min.js"></script>
+<script src="../../js/pdfmake/pdfmake.js"></script>
+<script src="../../css/datatables-buttons/js/buttons.html5.js"></script>
+<script src="../../css/datatables-buttons/js/buttons.print.js"></script>
+<script src="../../css/datatables-buttons/js/buttons.colVis.js"></script>
+<script src="../../js/adminlte.js"></script>
+<script src="../../js/demo.js"></script>
+<script>
+    $(function () {
+        $('#example2').DataTable({
+            "paging": true,
+            "lengthChange": false,
+            "searching": false,
+            "ordering": true,
+            "info": true,
+            "autoWidth": false,
+            "responsive": true,
+        });
+    });
+</script>
 </body>
 </html>

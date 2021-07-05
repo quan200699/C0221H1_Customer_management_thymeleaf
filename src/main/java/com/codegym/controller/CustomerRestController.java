@@ -3,10 +3,15 @@ package com.codegym.controller;
 import com.codegym.model.Customer;
 import com.codegym.service.customer.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +20,8 @@ import java.util.Optional;
 public class CustomerRestController {
     @Autowired
     private ICustomerService customerService;
+    @Value("${upload-file}")
+    private String filePath;
 
     @GetMapping
     public ResponseEntity<List<Customer>> getAllCustomer() {
@@ -26,13 +33,24 @@ public class CustomerRestController {
     }
 
     @GetMapping("/pagination")
-    public ResponseEntity<List<Customer>> getAllCustomerUsingPagination(@RequestParam int page, @RequestParam int size){
+    public ResponseEntity<List<Customer>> getAllCustomerUsingPagination(@RequestParam int page, @RequestParam int size) {
 //        List<Customer> customers = customerService.findAll(page, size);
         List<Customer> customers = customerService.findAllUsingQueryForPagination(size, page);
         if (customers.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT); //NO_CONTENT - 204
         }
         return new ResponseEntity<>(customers, HttpStatus.OK); // OK - 200
+    }
+
+    @PostMapping("/upload-file")
+    public ResponseEntity<String> uploadFile(@RequestParam MultipartFile avatar) {
+        String fileName = avatar.getOriginalFilename();
+        try {
+            FileCopyUtils.copy(avatar.getBytes(), new File(filePath + fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<>(fileName, HttpStatus.CREATED); //CREATED - 201
     }
 
     @PostMapping
@@ -61,7 +79,7 @@ public class CustomerRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id){
+    public ResponseEntity<Customer> deleteCustomer(@PathVariable Long id) {
         Optional<Customer> customerOptional = customerService.findById(id);
         if (!customerOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
